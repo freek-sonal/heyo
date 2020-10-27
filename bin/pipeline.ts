@@ -1,5 +1,4 @@
 import { Stack, StackProps, Construct, SecretValue } from '@aws-cdk/core';
-import {aws_cdk} from '@aws-cdk ;
 import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
 
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
@@ -12,8 +11,8 @@ export class MyPipelineStack extends Stack {
 
     const sourceArtifact = new codepipeline.Artifact();
     const cloudAssemblyArtifact = new codepipeline.Artifact();
-    // const oauth = codepipeline_actions.Action.cdk.SecretValue.secretsManager('d5b3d8d183497ee466582326f4567bea2a427ef3');
-    // new codepipeline_actions.Action.GitHubSource(this, 'GitHubAction', { oauthToken: oauth });
+    // const oauth = SecretValue.secretsManager('d5b3d8d183497ee466582326f4567bea2a427ef3');
+    // new GitHubSource(this, 'GitHubAction', { oauthToken: oauth });
     const pipeline = new CdkPipeline(this, 'Pipeline', {
       pipelineName: 'MyAppPipeline',
       cloudAssemblyArtifact,
@@ -21,8 +20,8 @@ export class MyPipelineStack extends Stack {
       sourceAction: new codepipeline_actions.GitHubSourceAction({
         actionName: 'GitHub',
         output: sourceArtifact,
-        oauthToken: SecretValue.secretsManager("GITHUB_TOKEN_NAME"),
-        // oauthToken: SecretValue.secretsManager('GITHUB_TOKEN_NAME'),
+        // oauthToken: oauth,
+        oauthToken: SecretValue.secretsManager('GITHUB_TOKEN_NAME'),
         trigger: codepipeline_actions.GitHubTrigger.POLL,
         // Replace these with your actual GitHub project info
         owner: 'freek-sonal',

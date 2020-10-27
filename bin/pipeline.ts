@@ -1,9 +1,10 @@
 import { Stack, StackProps, Construct, SecretValue } from '@aws-cdk/core';
 import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
+//import * as SecretValue from @aws-cdk/core.SecretValue
 
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
-aws_cdk.aws_codepipeline_actions.Action
+import * as codestarconnections from '@aws-cdk/aws-codestarconnections';
 
 export class MyPipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -17,12 +18,12 @@ export class MyPipelineStack extends Stack {
       pipelineName: 'MyAppPipeline',
       cloudAssemblyArtifact,
       
-      sourceAction: new codepipeline_actions.GitHubSourceAction({
+      sourceAction: new codepipeline_actions.BitBucketSourceAction({
         actionName: 'GitHub',
         output: sourceArtifact,
         // oauthToken: oauth,
-        oauthToken: SecretValue.secretsManager('GITHUB_TOKEN_NAME'),
-        trigger: codepipeline_actions.GitHubTrigger.POLL,
+        connectionArn: 'arn:aws:codestar-connections:us-east-1:274327307511:connection/a0214908-b207-407d-a2b3-47773f63cf72',
+        // trigger: codepipeline_actions.GitHubTrigger.POLL,
         // Replace these with your actual GitHub project info
         owner: 'freek-sonal',
         repo: 'hey',

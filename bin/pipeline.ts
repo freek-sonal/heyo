@@ -1,4 +1,5 @@
 import { Stack, StackProps, Construct, SecretValue } from '@aws-cdk/core';
+import {aws_cdk} from '@aws-cdk ;
 import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
 
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
@@ -20,7 +21,7 @@ export class MyPipelineStack extends Stack {
       sourceAction: new codepipeline_actions.GitHubSourceAction({
         actionName: 'GitHub',
         output: sourceArtifact,
-        OauthToken: SecretValue.secrets_manager("GITHUB_TOKEN_NAME"),
+        oauthToken: SecretValue.secretsManager("GITHUB_TOKEN_NAME"),
         // oauthToken: SecretValue.secretsManager('GITHUB_TOKEN_NAME'),
         trigger: codepipeline_actions.GitHubTrigger.POLL,
         // Replace these with your actual GitHub project info
